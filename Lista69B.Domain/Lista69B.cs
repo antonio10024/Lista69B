@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lista69B.Domain
 {
-    public class Lista69BEntity
+    public class Lista69BEntity:Auditable
     {
         public Lista69BEntity(Guid id, string name, bool isActive)
         {
@@ -42,7 +42,7 @@ namespace Lista69B.Domain
     {
         public int id { get; set; }
         public int No { get; set; }
-        public string RFC { get; set; }
+        public string RFC { get; set; } = string.Empty;
         public string NombredelContribuyente { get; set; } = string.Empty;
         public string SituacionContribuyente { get; set; } = string.Empty;
         public string NumeroYFechaDeOficioGlobalDePresuncionSAT { get; set; } = string.Empty;
