@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using Lista69B.Application.Lista.Map;
+using Lista69B.Application.Usuario;
 using Lista69B.Application.Utils;
 using Lista69B.Domain.Interface;
 using Lista69B.Domain.Repository;
@@ -30,7 +31,7 @@ namespace Lista69B.Application
             services.AddSingleton<IList69BSource>(cfg => new Lista69BUploadFile("http://omawww.sat.gob.mx/cifras_sat/Documents/Listado_Completo_69-B.csv", 1));
 
             services.AddTransient<IRepositoryLista69B, RepositoryLista69B>();
-
+            services.AddScoped<IUsuario, UsuarioHttp>();
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 

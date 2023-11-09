@@ -1,4 +1,5 @@
 ﻿using Lista69B.Domain;
+using Lista69B.Domain.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,11 @@ namespace Lista69B.Infrastructure.DB
 {
     public class CTXLista69B:DbContext
     {
-        public CTXLista69B(DbContextOptions options) : base(options)
-        {
 
+        private readonly IUsuario _usuario;
+        public CTXLista69B(DbContextOptions options,IUsuario usuario) : base(options)
+        {
+            _usuario = usuario;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,7 +25,27 @@ namespace Lista69B.Infrastructure.DB
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             //base.OnModelCreating(modelBuilder);
         }
-       
+
+        public override Task<int> SaveChangesAsync( CancellationToken cancellationToken = default)
+        {
+            foreach ( var entity in ChangeTracker.Entries<Auditable>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.UsuarioCreo = _usuario.Usuario();
+                        entity.Entity.FechaCreacion = DateTime.UtcNow;
+                        break;
+
+                    case EntityState.Modified:
+                        entity.Entity.UsuarioCreo = _usuario.Usuario();
+                        entity.Entity.FechaModificacion = DateTime.UtcNow;
+                        break;
+                }
+            }
+            return base.SaveChangesAsync( cancellationToken);
+        }
+
         public DbSet<Lista69BEntity> lista69B { get; set; }
         public DbSet<Lista69BRegistroEntity> listaRegistro { get; set; }
 

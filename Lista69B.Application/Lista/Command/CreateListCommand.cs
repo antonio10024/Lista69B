@@ -41,7 +41,7 @@ namespace Lista69B.Application.Lista.Command
                     if (listaActive.Name != lista69.Name)
                     {
                         listaActive.Inactive();
-                        _repositoryLista69B.Update(listaActive);
+                        await _repositoryLista69B.Update(listaActive);
                         return  Unit.Value;
                     }
                     else
@@ -50,7 +50,7 @@ namespace Lista69B.Application.Lista.Command
                     }
                 }
 
-                _repositoryLista69B.Add(lista69);
+                await _repositoryLista69B.Add(lista69);
 
                 return Unit.Value;
             }
