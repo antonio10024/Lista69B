@@ -1,7 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using Lista69B.Domain;
-using Lista69B.Domain.Interface;
+using Lista69B.Domain.Repository;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

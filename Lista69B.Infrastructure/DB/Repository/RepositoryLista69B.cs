@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Lista69B.Infrastructure.DB.Repository
 {
-    public class RepositoryLista69B : IRepositoryLista69B
+    public class RepositoryLista69B : IRepositoryList69B
     {
         private readonly CTXLista69B _ctx;
 
@@ -35,6 +35,11 @@ namespace Lista69B.Infrastructure.DB.Repository
             var list = await this.GetByActivity();
             var lista69B = _ctx.listaRegistro.Where(x => x.Lista69BId == list.Id && x.RFC==rfc | x.NombredelContribuyente==name ).ToList();
             return lista69B;
+        }
+
+        public async Task<Lista69BEntity> ListTemporal()
+        {
+             return await _ctx.lista69B.Include(x => x.Items).Where(x => x.IsActive == true).FirstOrDefaultAsync();
         }
 
         public async Task<bool> Update(Lista69BEntity lista69BEntity)

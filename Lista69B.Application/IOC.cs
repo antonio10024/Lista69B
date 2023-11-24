@@ -30,12 +30,13 @@ namespace Lista69B.Application
             //actulizar parametros para colocarlos en archivo de configuracion
             services.AddSingleton<IList69BSource>(cfg => new Lista69BUploadFile("http://omawww.sat.gob.mx/cifras_sat/Documents/Listado_Completo_69-B.csv", 1));
 
-            services.AddTransient<IRepositoryLista69B, RepositoryLista69B>();
+            services.AddTransient<IRepositoryList69B, RepositoryLista69B>();
+            services.AddTransient<IRepositoryWatchlist, ListaSeguimientoRepositorio>();
             services.AddScoped<IUsuario, UsuarioHttp>();
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
-            services.AddDbContext<CTXLista69B>(option => option.UseSqlServer("Data Source=.;Initial Catalog=Lista69BTest;Integrated Security=True;TrustServerCertificate=True"));
+            services.AddDbContext<CTXLista69B>(option => option.UseSqlServer("Data Source=.;Initial Catalog=Lista69BTest;Integrated Security=True;TrustServerCertificate=True"),ServiceLifetime.Transient);
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddAutoMapper(typeof(Lista69BMapper));
             services.AddValidatorsFromAssemblyContaining(typeof(GetByNameAndRFCValidation));
