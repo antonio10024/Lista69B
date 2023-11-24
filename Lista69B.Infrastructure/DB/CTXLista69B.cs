@@ -1,6 +1,7 @@
 ﻿using Lista69B.Domain;
 using Lista69B.Domain.Interface;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,10 @@ namespace Lista69B.Infrastructure.DB
 
         public DbSet<Lista69BEntity> lista69B { get; set; }
         public DbSet<Lista69BRegistroEntity> listaRegistro { get; set; }
+
+        public DbSet<ListaSeguimiento> listaSeguimientos { get; set; }
+        public DbSet<WatchListSweep> watchListSweeps { get; set; }
+        public DbSet<FoundWatchList> foundWatchLists { get; set; }
 
     }
 }

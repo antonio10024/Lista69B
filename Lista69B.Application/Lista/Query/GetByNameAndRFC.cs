@@ -27,18 +27,18 @@ namespace Lista69B.Application.Lista.Query
         {
             public GetByNameAndRFCValidation()
             {
-                RuleFor(x => x.RFC).NotEmpty().Matches("^(([A-Z]|[a-z]|\\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3}))");
+                RuleFor(x => x.RFC).NotEmpty().Matches("[A-ZÑ&]{3,4}\\d{6}[A-V1-9][A-Z1-9][0-9A]");
                 RuleFor(x => x.Name).NotEmpty().MinimumLength(3);
             }
         }
 
         public class GetByNameAndRFCHandler : IRequestHandler<GetByNameAndRFCRequest, List<RegistroLista69BDTO>>
         {
-            private readonly IRepositoryLista69B _repo;
+            private readonly IRepositoryList69B _repo;
             private readonly IMapper _map;
    
 
-            public GetByNameAndRFCHandler(IRepositoryLista69B repo, IMapper map)
+            public GetByNameAndRFCHandler(IRepositoryList69B repo, IMapper map)
             {
                 _repo = repo;
                 _map = map;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lista69B.Domain.Interface
+namespace Lista69B.Domain.Repository
 {
     public interface IList69BSource
     {

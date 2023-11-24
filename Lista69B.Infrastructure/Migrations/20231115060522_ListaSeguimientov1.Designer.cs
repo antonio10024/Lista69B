@@ -4,6 +4,7 @@ using Lista69B.Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lista69B.Infrastructure.Migrations
 {
     [DbContext(typeof(CTXLista69B))]
-    partial class CTXLista69BModelSnapshot : ModelSnapshot
+    [Migration("20231115060522_ListaSeguimientov1")]
+    partial class ListaSeguimientov1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,31 +24,6 @@ namespace Lista69B.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Lista69B.Domain.FoundWatchList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("List69BId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("WatchListId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("WatchListSweepId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id")
-                        .HasName("WathcListSweepDetailId");
-
-                    b.HasIndex("WatchListSweepId");
-
-                    b.ToTable("WathcListSweepDetail", (string)null);
-                });
 
             modelBuilder.Entity("Lista69B.Domain.Lista69BEntity", b =>
                 {
@@ -212,34 +190,6 @@ namespace Lista69B.Infrastructure.Migrations
                     b.ToTable("ListaSeguimiento", (string)null);
                 });
 
-            modelBuilder.Entity("Lista69B.Domain.WatchListSweep", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("ExecutionDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id")
-                        .HasName("WathcListSweepId");
-
-                    b.ToTable("WathcListSweep", (string)null);
-                });
-
-            modelBuilder.Entity("Lista69B.Domain.FoundWatchList", b =>
-                {
-                    b.HasOne("Lista69B.Domain.WatchListSweep", "WatchListSweep")
-                        .WithMany("Founds")
-                        .HasForeignKey("WatchListSweepId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("WatchListSweep");
-                });
-
             modelBuilder.Entity("Lista69B.Domain.Lista69BRegistroEntity", b =>
                 {
                     b.HasOne("Lista69B.Domain.Lista69BEntity", "Lista69B")
@@ -254,11 +204,6 @@ namespace Lista69B.Infrastructure.Migrations
             modelBuilder.Entity("Lista69B.Domain.Lista69BEntity", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("Lista69B.Domain.WatchListSweep", b =>
-                {
-                    b.Navigation("Founds");
                 });
 #pragma warning restore 612, 618
         }
