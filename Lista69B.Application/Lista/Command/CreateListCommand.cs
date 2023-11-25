@@ -44,6 +44,7 @@ namespace Lista69B.Application.Lista.Command
                     {
                         listaActive.Inactive();
                         await _repositoryLista69B.Update(listaActive);
+                        await _mediator.Publish(new SearchOnWatchListNotificacionRequest());
                         return  Unit.Value;
                     }
                     else
