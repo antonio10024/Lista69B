@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Lista69B.Application.Background;
 using Lista69B.Application.Lista.Map;
 using Lista69B.Application.Usuario;
 using Lista69B.Application.Utils;
@@ -12,6 +13,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,10 +38,31 @@ namespace Lista69B.Application
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
-            services.AddDbContext<CTXLista69B>(option => option.UseSqlServer("Data Source=.;Initial Catalog=Lista69BTest;Integrated Security=True;TrustServerCertificate=True"),ServiceLifetime.Transient);
+            services.AddDbContext<CTXLista69B>(option => option.UseSqlServer("Data Source=.;Initial Catalog=Lista69BTest;Integrated Security=True;TrustServerCertificate=True"), ServiceLifetime.Transient);
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddAutoMapper(typeof(Lista69BMapper));
             services.AddValidatorsFromAssemblyContaining(typeof(GetByNameAndRFCValidation));
+
+            //background task
+            services.AddQuartz(q =>
+            {
+                q.SchedulerName = "BackgroundScheduler";
+                q.AddJob<UpdateList69BJob>(opts => opts.WithIdentity(UpdateList69BJob.Key));
+
+                q.AddTrigger(opts => opts
+                      .ForJob(UpdateList69BJob.Key)
+                      .WithIdentity("SendEmailJob-trigger")
+                      .StartNow()
+                      .WithSimpleSchedule(x=>x.WithIntervalInHours(24).RepeatForever())
+                      //This Cron interval can be described as "run every minute" (when second is zero)
+                      //.WithCronSchedule("0 * * ? * *")
+                  );
+
+            });
+            services.AddTransient<UpdateList69BJob>();
+            services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+
+
             return services;
         }
     }
