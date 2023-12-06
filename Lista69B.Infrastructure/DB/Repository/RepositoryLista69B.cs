@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.InteropServices.ObjectiveC;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +18,7 @@ namespace Lista69B.Infrastructure.DB.Repository
         public RepositoryLista69B(CTXLista69B ctx)
         {
             _ctx = ctx;
+            
         }
 
         public async Task<bool> Add(Lista69BEntity lista69BEntity)
@@ -23,6 +26,19 @@ namespace Lista69B.Infrastructure.DB.Repository
             _ctx.lista69B.Add(lista69BEntity);
             var res=await _ctx.SaveChangesAsync();
             return res == 0 ? false : true;
+        }
+
+        public async Task<Lista69BEntity> Get(Func<Lista69BEntity, bool> filter = null, Func<IQueryable<Lista69BEntity>, IQueryable<Lista69BEntity>> include = null)
+        {
+            IEnumerable<Lista69BEntity> query = _ctx.lista69B;
+            if (include is not null)
+                query = include(query.AsQueryable());
+            if (filter is not null)
+                query = query.Where(filter);
+            
+
+            return  query.FirstOrDefault();
+
         }
 
         public async Task<Lista69BEntity> GetByActivity()

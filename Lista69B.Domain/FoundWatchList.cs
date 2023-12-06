@@ -10,7 +10,9 @@ namespace Lista69B.Domain
     {
         public int Id { get; set; }
         public Guid WatchListId { get; set; }
-        public int List69BId { get; set; }
+        public int Register69BId { get; set; }
+
+        public Guid Lista69BId { get; set; }
         public WatchListSweep WatchListSweep { get; set; }
         public int WatchListSweepId { get; set; }
     }

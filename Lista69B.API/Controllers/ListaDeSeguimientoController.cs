@@ -3,7 +3,9 @@ using Lista69B.Application.Lista.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 using static Lista69B.Application.Lista.Command.AddWatchlistCommand;
+using static Lista69B.Application.Lista.Query.FoundSearchQuery;
 using static Lista69B.Application.Lista.Query.WatchlistSweepQuery;
 
 namespace Lista69B.API.Controllers
@@ -21,6 +23,13 @@ namespace Lista69B.API.Controllers
         public async Task<Unit> Post(AddWatchlistDTO request)
         {
             return await _mediator.Send(new AddWatchlistCommandRequest() { RazonSocial=request.RazonSocial,RFC=request.RFC});
+        }
+
+        [HttpGet("ListFound")]
+        public  async Task<ListFoundDTO> ListFound()
+        {
+            return await _mediator.Send(new FoundSearchQueryRequest());
+             
         }
 
         [HttpGet]

@@ -20,5 +20,9 @@ namespace Lista69B.Domain.Repository
 
         public Task<bool> SaveFounds(WatchListSweep entity);
 
+        public Task<WatchListSweep> GetFound();
+
+        public Task<ListaSeguimiento> GetById(Guid id);
+
     }
 }

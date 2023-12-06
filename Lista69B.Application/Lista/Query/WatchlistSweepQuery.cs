@@ -44,12 +44,12 @@ namespace Lista69B.Application.Lista.Query
                     var search = listaTemporal.Where(y => y.RFC == x.RFC | y.NombredelContribuyente == x.RazonSocial).ToList();
                     if (search.Count > 0)
                     {
-                        search.ForEach(y => foundList.Add(new FoundDTO() { List69BId = y.id, WatchListId = x.Id }));
+                        search.ForEach(y => foundList.Add(new FoundDTO() { Register69BId = y.id, WatchListId = x.Id ,Lista69BId=y.Lista69BId }));
                     }
                 });
 
                 WatchListSweep entity = new WatchListSweep();
-                foundList.ToList().ForEach(x => entity.add(new FoundWatchList() { WatchListId = x.WatchListId, List69BId = x.List69BId }));
+                foundList.ToList().ForEach(x => entity.add(new FoundWatchList() { WatchListId = x.WatchListId, Register69BId = x.Register69BId,Lista69BId=x.Lista69BId }));
 
                 await _repo.SaveFounds(entity);
 

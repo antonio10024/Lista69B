@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Lista69B.Application.Lista.DTO
 {
-    public class FoundDTO
+    public class ItemListFoundDTO
     {
-        public Guid WatchListId { get; set; }
-        public int Register69BId { get; set; }
-
-        public Guid Lista69BId { get; set; }
+        public string FoundRFC { get; set; }
+        
+        public List<RegistroLista69BDTO> registroLista69B { get; set; }
 
     }
 }

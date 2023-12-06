@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,9 +45,22 @@ namespace Lista69B.Infrastructure.DB.Repository
             return await _ctx.listaSeguimientos.Where(x => x.Activo == true).AsNoTracking().ToListAsync();
         }
 
+        public async Task<ListaSeguimiento> GetById(Guid id)
+        {
+            return await _ctx.listaSeguimientos.Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
+
         public async Task<ListaSeguimiento> GetByRFC(string RFC)
         {
             return await _ctx.listaSeguimientos.Where(x => x.RFC.ToLower().Equals(RFC.ToLower())).FirstOrDefaultAsync();
+        }
+
+        public  Task<WatchListSweep> GetFound()
+        {
+            //obtener el ultimo resultado del barrido 
+            return Task.FromResult( _ctx.watchListSweeps.Include(x => x.Founds).OrderByDescending(x => x.Id).FirstOrDefault());
+
+            
         }
 
         public async Task<bool> SaveFounds(WatchListSweep entity)

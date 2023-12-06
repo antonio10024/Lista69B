@@ -27,7 +27,7 @@ namespace Lista69B.Application.Lista.Query
         {
             public GetByNameAndRFCValidation()
             {
-                RuleFor(x => x.RFC).NotEmpty().Matches("[A-ZÑ&]{3,4}\\d{6}[A-V1-9][A-Z1-9][0-9A]");
+                RuleFor(x => x.RFC.ToUpper()).NotEmpty().Matches("[A-ZÑ&]{3,4}\\d{6}[A-V1-9][A-Z1-9][0-9A]");
                 RuleFor(x => x.Name).NotEmpty().MinimumLength(3);
             }
         }

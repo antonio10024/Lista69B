@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lista69B.Application.Lista.DTO
 {
-    public class FoundDTO
+    public class ListFoundDTO
     {
-        public Guid WatchListId { get; set; }
-        public int Register69BId { get; set; }
-
-        public Guid Lista69BId { get; set; }
-
+        public int Count { get; set; }
+        public List<ItemListFoundDTO> List { get; set; }
     }
 }
