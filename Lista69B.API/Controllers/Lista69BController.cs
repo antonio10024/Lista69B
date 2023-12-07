@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using static Lista69B.Application.Lista.Command.CreateListCommand;
 using static Lista69B.Application.Lista.Query.GetByNameAndRFC;
 using static Lista69B.Application.Lista.Query.GetByRFC;
+using static Lista69B.Application.Lista.Query.GetList69BActiveQuery;
 
 namespace Lista69B.API.Controllers
 {
@@ -25,6 +26,11 @@ namespace Lista69B.API.Controllers
             return  await this._mediator.Send(new CreateListCommandRequest());
         }
 
+        [HttpGet("Active")]
+        public async Task<List69BDTO> Active()
+        {
+            return await _mediator.Send(new GetList69BactiveQueryRequest());
+        }
         
         [HttpGet("GetByRFCAndName")]
         public async Task<List<RegistroLista69BDTO>> GetByRFCAndName(string rfc, string name)

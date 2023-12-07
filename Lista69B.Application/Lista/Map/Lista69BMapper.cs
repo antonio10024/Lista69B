@@ -16,6 +16,9 @@ namespace Lista69B.Application.Lista.Map
             CreateMap<Lista69BRegistroEntity, DTO.RegistroLista69BDTO>();
             CreateMap<AddWatchlistCommandRequest, ListaSeguimiento>().ConstructUsing(x=>new ListaSeguimiento(x.RFC,x.RazonSocial));
             CreateMap<AddWatchlistCommandRequest, DTO.AddWatchlistDTO>();
+            CreateMap<Lista69BEntity, DTO.List69BDTO>()
+                .ForMember(x=>x.CreateDate,opt=>opt.MapFrom(y=>y.FechaCreacion))
+                .ForMember(x=>x.RegisterCount,opt=>opt.MapFrom(y=>y.Items.Count));
         }
     }
 }
